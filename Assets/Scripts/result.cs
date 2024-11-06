@@ -16,10 +16,4 @@ public class result : MonoBehaviour
     {
         resultText.text = "あなたの得点は" + " " + formulaimput.countText.text + "点です";
     }
-
-    // Update is called once per frame
-    // void Update()
-    // {
-
-    // }
 }

@@ -74,7 +74,6 @@ public class formulaimput : MonoBehaviour
         num4.GetComponent<Button>().interactable = false;
         clear.GetComponent<Button>().interactable = false;
         delete.GetComponent<Button>().interactable = false;
-        calculate.GetComponent<Button>().interactable = false;
         plus.GetComponent<Button>().interactable = false;
         minus.GetComponent<Button>().interactable = false;
         multiply.GetComponent<Button>().interactable = false;
@@ -116,7 +115,7 @@ public class formulaimput : MonoBehaviour
         numberButtonMap[num2] = RandomNumberToObject.numbers[1];
         numberButtonMap[num3] = RandomNumberToObject.numbers[2];
         numberButtonMap[num4] = RandomNumberToObject.numbers[3];
-        if (num1.gameObject.activeSelf | num2.gameObject.activeSelf | num3.gameObject.activeSelf | num4.gameObject.activeSelf)
+        if (num1.gameObject.activeSelf | num2.gameObject.activeSelf | num3.gameObject.activeSelf | num4.gameObject.activeSelf | !IsFormulaValid(currentFormula))
         {
             calculate.GetComponent<Button>().interactable = false;
         }
@@ -252,4 +251,21 @@ public class formulaimput : MonoBehaviour
         resultText.text = "";
         formulaText.text = currentFormula.Replace("*", "×").Replace("/", "÷") + " ";
     }
+
+    // 数式の妥当性を確認する関数
+    private bool IsFormulaValid(string formula)
+    {
+        try
+        {
+            // 数式をチェックする（例：計算可能かどうか）
+            double result = Calculator.EvaluateExpression(formula);
+            return true;
+        }
+        catch
+        {
+            // 例外が発生した場合は無効な数式
+            return false;
+        }
+    }
+
 }
