@@ -214,7 +214,7 @@ public class formulaimput : MonoBehaviour
             if (result == 10)
             {
                 // Debug.Log("正解！");
-                resultText.text = "<color=red>" + "◯" + " </color=red >";
+                resultText.text = "<color=red>" + "\u3007" + " </color=red >";
                 isSuccess = true;
                 this.GetComponent<AudioSource>().PlayOneShot(success);
                 count++;
