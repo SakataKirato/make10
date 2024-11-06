@@ -39,6 +39,7 @@ public class formulaimput : MonoBehaviour
     public int countdownTime; // カウントダウンの秒数
     static public bool isCounting = true;
     static public bool isSuccess = false;
+    private string tmptext;
 
 
 
@@ -99,9 +100,6 @@ public class formulaimput : MonoBehaviour
         num2.GetComponent<Button>().interactable = true;
         num3.GetComponent<Button>().interactable = true;
         num4.GetComponent<Button>().interactable = true;
-        clear.GetComponent<Button>().interactable = true;
-        delete.GetComponent<Button>().interactable = true;
-        calculate.GetComponent<Button>().interactable = true;
         plus.GetComponent<Button>().interactable = true;
         minus.GetComponent<Button>().interactable = true;
         multiply.GetComponent<Button>().interactable = true;
@@ -118,6 +116,25 @@ public class formulaimput : MonoBehaviour
         numberButtonMap[num2] = RandomNumberToObject.numbers[1];
         numberButtonMap[num3] = RandomNumberToObject.numbers[2];
         numberButtonMap[num4] = RandomNumberToObject.numbers[3];
+        if (num1.gameObject.activeSelf | num2.gameObject.activeSelf | num3.gameObject.activeSelf | num4.gameObject.activeSelf)
+        {
+            calculate.GetComponent<Button>().interactable = false;
+        }
+        else
+        {
+            calculate.GetComponent<Button>().interactable = true;
+        }
+
+        if (currentFormula == "")
+        {
+            delete.GetComponent<Button>().interactable = false;
+            clear.GetComponent<Button>().interactable = false;
+        }
+        else
+        {
+            delete.GetComponent<Button>().interactable = true;
+            clear.GetComponent<Button>().interactable = true;
+        }
     }
 
     // 演算子を数式に追加する関数
@@ -210,8 +227,8 @@ public class formulaimput : MonoBehaviour
                 // Debug.Log("不正解！");
                 resultText.text = "<color=blue>" + "×" + " </color=blue >";
                 this.GetComponent<AudioSource>().PlayOneShot(failure);
-                formulaText.text = formulaText.text.Replace("×", "*").Replace("÷", "/");
-                string[] formulaParts = formulaText.text.Trim().Split(" ");
+                tmptext = formulaText.text.Replace("×", "*").Replace("÷", "/");
+                string[] formulaParts = tmptext.Trim().Split(" ");
                 currentFormula = string.Join(" ", formulaParts, 0, formulaParts.Length - 2);
                 StartCoroutine(failureWait());
             }
