@@ -15,7 +15,7 @@ public class formulaimput : MonoBehaviour
     [SerializeField] private TextMeshProUGUI ResultText; // 結果を表示するTextMeshPro
     public static TextMeshProUGUI resultText; // 結果を表示するTextMeshPro
     // public TextMeshProUGUI countText; // カウントを表示するTextMeshPro
-    private int count;
+    static public int count;
     static public string currentFormula = ""; // 現在の数式
     public Button plus;
     public Button minus;
@@ -80,6 +80,7 @@ public class formulaimput : MonoBehaviour
         divide.GetComponent<Button>().interactable = false;
         leftkakko.GetComponent<Button>().interactable = false;
         rightkakko.GetComponent<Button>().interactable = false;
+        countText.text = "得点:" + " " + count.ToString();
     }
 
     IEnumerator CountdownToStart()
@@ -218,7 +219,7 @@ public class formulaimput : MonoBehaviour
                 isSuccess = true;
                 this.GetComponent<AudioSource>().PlayOneShot(success);
                 count++;
-                countText.text = count.ToString();
+                countText.text = "得点:" + " " + count.ToString();
                 StartCoroutine(successWait());
             }
             else

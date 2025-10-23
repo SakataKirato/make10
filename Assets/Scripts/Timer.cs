@@ -4,6 +4,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using PlayFab;
+using PlayFab.ClientModels;
 
 public class Timer : MonoBehaviour
 {
@@ -12,10 +14,14 @@ public class Timer : MonoBehaviour
     [SerializeField] TextMeshProUGUI timerText;
     float time;
     int remaining;
+    public static int finalscore;
+
+    public TextMeshProUGUI FinishText;
 
     void Start()
     {
-        timerText.text = timeLimit.ToString();
+        formulaimput.count = 0;
+        timerText.text = "残り:" + " " + timeLimit.ToString();
     }
 
     void Update()
@@ -31,23 +37,33 @@ public class Timer : MonoBehaviour
                 //timerTextを更新していく
                 if (remaining >= 100)
                 {
-                    timerText.text = $"{remaining.ToString("D3")}";
+                    timerText.text = "残り:" + " " + $"{remaining.ToString("D3")}";
                 }
                 else if (remaining >= 10)
                 {
-                    timerText.text = $"{remaining.ToString("D2")}";
+                    timerText.text = "残り:" + " " + $"{remaining.ToString("D2")}";
                 }
-                else
+                else if (remaining >= 0)
                 {
-                    timerText.text = $"{remaining.ToString("D1")}";
+                    timerText.text = "残り:" + " " + $"{remaining.ToString("D1")}";
                 }
             }
             else
             {
                 //制限時間を超えたら
-                timerText.text = "0";
-                SceneManager.LoadScene("result");
+                timerText.text = "残り:" + " " + "0";
+                finalscore = formulaimput.count;
+                PlayFabManager.SendPlayScore(finalscore);
+                StartCoroutine(ChangeScene());
             }
         }
+    }
+
+    IEnumerator ChangeScene()
+    {
+        FinishText.text = "終了！";
+        yield return new WaitForSeconds(2.0f);
+        SceneManager.LoadScene("result");
+        formulaimput.isCounting = true;
     }
 }
